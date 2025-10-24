@@ -1,0 +1,261 @@
+proxies: 
+  - name: "全球直连"
+    type: direct
+    udp: true
+
+mixed-port: 7890
+ipv6: true
+allow-lan: true
+unified-delay: false
+tcp-concurrent: true
+external-controller: 127.0.0.1:9090
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "+.market.xiaomi.com"
+  default-nameserver:
+    - tls://223.5.5.5
+    - tls://223.6.6.6
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+
+proxy-groups:
+  - name: 套餐到期
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)套餐到期|流量"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Pirate_Nation.png
+
+  - name: 节点选择
+    type: select
+    proxies:
+      - 手动切换
+      - 🇭🇰 香港
+      - 🇨🇳 台湾
+      - 🇯🇵 日本
+      - 🇸🇬 新加坡
+      - 🇺🇸 美国
+      - 其它地区
+      - DIRECT
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Proxy.png
+
+  - name: 手动切换
+    type: select
+    include-all: true
+    exclude-type: direct
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/WiFi.png
+
+  - name: 自动选择 
+    type: url-test
+    include-all: true
+    exclude-type: direct
+    tolerance: 10
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Loop.png
+
+  - name: Telegram
+    type: select
+    proxies: [节点选择,🇭🇰 香港,🇸🇬 新加坡,🇺🇸 美国,自建节点,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Telegram.png
+
+  - name: AI
+    type: select
+    proxies: [节点选择,🇺🇸 美国,自建节点,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/ChatGPT.png
+
+  - name: Google
+    type: select
+    proxies: [节点选择,自建节点,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Google_Search.png
+
+  - name: TikTok
+    type: select
+    proxies:  [自建节点,🇺🇸 美国,节点选择,🇭🇰 香港,🇸🇬 新加坡,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/TikTok_1.png
+
+  - name: YouTube
+    type: select
+    proxies: [自建节点,🇺🇸 美国,节点选择,🇭🇰 香港,🇸🇬 新加坡,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/YouTube.png
+
+  - name: Netflix
+    type: select
+    proxies: [自建节点,🇺🇸 美国,节点选择,🇭🇰 香港,🇸🇬 新加坡,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Netflix.png
+    
+  - name: EmbyCF
+    type: select
+    proxies: [自建节点,🇺🇸 美国,节点选择,🇭🇰 香港,🇸🇬 新加坡]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Emby.png
+
+  - name: 广告拦截
+    type: select
+    proxies: [REJECT,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/AdBlack.png
+
+  - name: 应用净化
+    type: select
+    proxies: [REJECT,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Azure.png
+    
+  - name: 隐私防护
+    type: select
+    proxies: [REJECT,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Advertising.png
+
+  - name: 国内媒体
+    type: select
+    proxies: [DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Global.png
+
+  - name: 漏网之鱼
+    type: select
+    proxies:  [节点选择,DIRECT]
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Global.png
+
+  #分隔,下面是地区分组
+  - name: 🇭🇰 香港
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)港|hk|hongkong|hong kong"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Hong_Kong.png
+
+  - name: 🇨🇳 台湾
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)台|tw|taiwan"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Taiwan.png
+
+  - name: 🇯🇵 日本
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)日|jp|japan"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Japan.png
+
+  - name: 🇺🇸 美国
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)美|us|unitedstates|united states"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/United_States.png
+
+  - name: 🇸🇬 新加坡
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)(新|sg|singapore)"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Singapore.png
+
+  - name: 其它地区
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Area.png
+
+  - name: 自建节点
+    type: select
+    include-all: true
+    exclude-type: direct
+    filter: "(?i)自建"
+    icon: https://gh-proxy.com/https://github.com/heywangchaochen/Qure/blob/master/IconSet/Color/Lock.png
+
+rules:
+#手写规则匹配
+#emby代理 (,,中间写emby地址),EmbyCF是走代理的
+  - DOMAIN,,EmbyCF # 此处可以写你的emby名，例如终点站1
+  - DOMAIN,,EmbyCF # 此处可以写你的emby名，例如终点站2
+
+
+#emby直连 (,,中间写emby地址),DIRECT是走直连的
+  - DOMAIN-SUFFIX,,DIRECT #此处可以写你的emby名，例如终点站
+
+
+#Github规则
+  - RULE-SET,ad_block,广告拦截
+  - RULE-SET,application_purification,应用净化
+  - RULE-SET,youtube_domain,YouTube
+  - RULE-SET,google_domain,Google
+  - RULE-SET,telegram_domain,Telegram
+  - RULE-SET,tiktok_domain,TikTok
+  - RULE-SET,netflix_domain,Netflix
+  - RULE-SET,ai_domain,AI
+  - RULE-SET,privacy_protection,隐私防护
+  - GEOIP,CN,DIRECT
+  - MATCH,漏网之鱼
+
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  c: &c {type: http, interval: 86400, behavior: classical, format: text}
+rule-providers:
+  ad_block:
+    <<: *c
+    url: "https://raw.githubusercontent.com/heywangchaochen/Clash_Rules_Script/blob/main/Rules/Ad_Block.list"
+  application_purification:
+    <<: *c
+    url: "https://raw.githubusercontent.com/heywangchaochen/Clash_Rules_Script/blob/main/Rules/Application_Purification.list"
+  youtube_domain:
+    <<: *c
+    url: "https://raw.githubusercontent.com/heywangchaochen/Clash_Rules_Script/refs/heads/main/Rules/YouTube.list"
+  google_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
+  telegram_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
+  tiktok_domain:
+    <<: *c
+    url: "https://raw.githubusercontent.com/heywangchaochen/Clash_Rules_Script/refs/heads/main/Rules/TikTok.list"
+  ai_domain:
+    <<: *c
+    url: "https://raw.githubusercontent.com/heywangchaochen/Clash_Rules_Script/refs/heads/main/Rules/AI.list"
+  netflix_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"
+  privacy_protection:
+    <<: *c
+    url: "https://raw.githubusercontent.com/heywangchaochen/Clash_Rules_Script/blob/main/Rules/Privacy_Protection.list"
