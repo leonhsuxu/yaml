@@ -108,64 +108,16 @@ const regionOptions = {
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png',
     },
     {
-      name: 'KR韩国',
-      regex: /韩|🇰🇷|kr|korea/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Korea.png',
-    },
-    {
-      name: 'SG新加坡',
-      regex: /新加坡|🇸🇬|sg|singapore/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png',
-    },
-    {
-      name: 'CN中国大陆',
-      regex: /中国|🇨🇳|cn|china/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png',
-    },
-    {
       name: 'TW台湾省',
       regex: /台湾|🇹🇼|tw|taiwan|tai wan/i,
       ratioLimit: 2,
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png',
     },
     {
-      name: 'GB英国',
-      regex: /英|🇬🇧|uk|united kingdom|great britain/i,
+      name: 'SG新加坡',
+      regex: /新加坡|🇸🇬|sg|singapore/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png',
-    },
-    {
-      name: 'DE德国',
-      regex: /德国|🇩🇪|de|germany/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png',
-    },
-    {
-      name: 'MY马来西亚',
-      regex: /马来|🇲🇾|my|malaysia/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png',
-    },
-    {
-      name: 'TK土耳其',
-      regex: /土耳其|🇹🇷|tk|turkey/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png',
-    },
-    {
-      name: 'CA加拿大',
-      regex: /加拿大|🇨🇦|ca|canada/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png',
-    },
-    {
-      name: 'AU澳大利亚',
-      regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png',
+      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png',
     },
   ],
 }
@@ -754,21 +706,21 @@ function main(config) {
       ],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Download.png',
     },
-    {
-      ...groupBaseOption,
-      name: '其他外网',
-      type: 'select',
-      proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Streaming!CN.png',
-    },
-    {
-      ...groupBaseOption,
-      name: '国内网站',
-      type: 'select',
-      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      url: 'http://wifi.vivo.com.cn/generate_204',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png',
-    }
+  // {
+  //  ...groupBaseOption,
+  //  name: '其他外网',
+  //  type: 'select',
+  //   proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
+  //   icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Streaming!CN.png',
+  //},
+  // {
+  // ...groupBaseOption,
+  // name: '国内网站',
+  //  type: 'select',
+  //  proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+  //  url: 'http://wifi.vivo.com.cn/generate_204',
+  //  icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png',
+  //}
   )
 
   config['proxy-groups'] = config['proxy-groups'].concat(regionProxyGroups)
@@ -789,4 +741,5 @@ function main(config) {
 
   // 返回修改后的配置
   return config
+
 }
