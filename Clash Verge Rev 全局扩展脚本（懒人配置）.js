@@ -722,67 +722,77 @@ function main(config) {
   //  icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png',
   //}
   )
+  /* ========= 关键补丁开始 ========= */
 
-    /* ========= 补丁：把 5 个地区节点全部移到「其他地区」 ========= */
-  const fiveRegions = /(英国|🇬🇧|UK|马来西亚|🇲🇾|MY|土耳其|🇹🇷|TR|加拿大|🇨🇦|CA|澳大利亚|🇦🇺|AU)/i;
-  const fiveNodes = [];                       // 收集 5 区节点
-  regionProxyGroups = regionProxyGroups.filter(g => {
-    if (fiveRegions.test(g.name)) {
-      fiveNodes.push(...g.proxies);          // 抽出节点
-      return false;                          // 删除该策略组
-    }
-    return true;                             // 保留剩余地区组
-  });
-
-  // 把 5 区节点与原来「其他节点」合并
+  // 1. 把英国/马来西亚/土耳其/加拿大/澳大利亚 节点并入 “其他节点”
+  const skipNames = /(英国|🇬🇧|UK|马来西亚|🇲🇾|MY|土耳其|🇹🇷|TR|加拿大|🇨🇦|CA|澳大利亚|🇦🇺|AU)/i;
+  regionProxyGroups = regionProxyGroups.filter(g => !skipNames.test(g.name));
+  const fiveNodes = config.proxies
+    .filter(p => skipNames.test(p.name))
+    .map(p => p.name);
   otherProxyGroups.push(...fiveNodes);
   otherProxyGroups = [...new Set(otherProxyGroups)]; // 去重
 
-  /* ========= 补丁：新增 3 个全局策略组 ========= */
-  const allNodeNames = [
-    ...regionProxyGroups.flatMap(g => g.proxies), // 剩余地区节点
-    ...otherProxyGroups,                          // 含 5 区节点
-  ];
+  // 2. 收集所有可用节点（地区节点 + 其他节点）
+  const keptNodes = regionProxyGroups.flatMap(g => g.proxies);
+  const allNodes = [...keptNodes, ...otherProxyGroups];
 
-  const newGlobalGroups = [
+  // 3. 生成新的策略组（只写一次）
+  config['proxy-groups'] = [
+    {
+      ...groupBaseOption,
+      name: '默认节点',
+      type: 'select',
+      proxies: [
+        '♻️ 自动选择',
+        '⚖️ 负载均衡',
+        '🔄 故障转移',
+        ...regionProxyGroups.map(g => g.name),
+        ...(otherProxyGroups.length ? ['其他节点'] : []),
+        '直连',
+      ],
+    },
     {
       ...groupBaseOption,
       name: '♻️ 自动选择',
       type: 'url-test',
       tolerance: 50,
-      proxies: allNodeNames,
+      proxies: allNodes,
     },
     {
       ...groupBaseOption,
       name: '⚖️ 负载均衡',
       type: 'load-balance',
       strategy: 'consistent-hashing',
-      proxies: allNodeNames,
+      proxies: allNodes,
     },
     {
       ...groupBaseOption,
       name: '🔄 故障转移',
       type: 'fallback',
-      proxies: allNodeNames,
+      proxies: allNodes,
     },
-  ];
-
-  /* ========= 写回最终 proxy-groups ========= */
-  const regionNames = [
-    ...regionProxyGroups.map(g => g.name),
-    ...newGlobalGroups.map(g => g.name),
-  ];
-
-  config['proxy-groups'] = [
-    {
-      ...groupBaseOption,
-      name: '默认节点',
-      type: 'select',
-      proxies: [...regionNames, '其他节点', '直连'],
-    },
-    ...newGlobalGroups,
     ...regionProxyGroups,
   ];
+
+  // 4. 按需追加 “其他节点” 组
+  if (otherProxyGroups.length > 0) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '其他节点',
+      type: 'select',
+      proxies: otherProxyGroups,
+      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png',
+    });
+  }
+
+  /* ========= 关键补丁结束 ========= */
+
+  // 其余逻辑（规则、rule-providers）保持不变
+  config['rules'] = rules;
+  config['rule-providers'] = Object.fromEntries(ruleProviders);
+  return config;
+
 
   config['proxy-groups'] = config['proxy-groups'].concat(regionProxyGroups)
 
@@ -804,4 +814,5 @@ function main(config) {
   return config
 
 }
+
 
