@@ -364,11 +364,11 @@ function main(config) {
     proxyGroupsRegionNames.push('🇺🇳其他')
   }
 
-  // 更改：默认节点名称改为 "节点选择"，并在其中增加 "自动选择"、"故障转移"、"负载均衡" 选项
+  // 更改：默认节点名称改为 "🚀 节点选择"，并在其中增加 "♻️ 自动选择"、"🔄 故障转移"、"⚖️ 负载均衡" 选项
   config['proxy-groups'] = [
     {
       ...groupBaseOption,
-      name: '节点选择',
+      name: '🚀 节点选择',
       type: 'select',
       // 在选项中增加 "自动选择"、"故障转移" 和 "负载均衡"（需下面创建对应的策略组），并保留地区组与直连
       proxies: ['♻️ 自动选择', ...proxyGroupsRegionNames, '直连'], //⚖️ 负载均衡、🔄 故障转移也可以增加到自动选择后面
@@ -376,7 +376,7 @@ function main(config) {
     },
   ]
 
-  // 新增：自动选择 策略组（用于“节点选择”中的自动选择项）
+  // 新增：自动选择 策略组（用于“🚀 节点选择”中的自动选择项）
   config['proxy-groups'].push({
     ...groupBaseOption,
     name: '♻️ 自动选择',
@@ -446,7 +446,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'YouTube',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.youtube.com/s/desktop/494dd881/img/favicon.ico',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png',
     })
@@ -494,7 +494,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'NETFLIX',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://api.fast.com/netflix/speedtest/v2?https=true',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png',
     })
@@ -506,7 +506,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'Tiktok',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.tiktok.com/',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png',
     })
@@ -518,7 +518,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'Spotify',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png',
     })
@@ -591,7 +591,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'Telegram',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.telegram.org/img/website_icon.svg',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png',
       hidden: true,
@@ -604,7 +604,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'WhatsApp',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://web.whatsapp.com/data/manifest.json',
       icon: 'https://static.whatsapp.net/rsrc.php/v3/yP/r/rYZqPCBaG70.png',
     })
@@ -616,7 +616,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'Line',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://line.me/page-data/app-data.json',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Line.png',
     })
@@ -631,7 +631,7 @@ function main(config) {
       ...groupBaseOption,
       name: '游戏专用',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png',
     })
   }
@@ -643,7 +643,7 @@ function main(config) {
       ...groupBaseOption,
       name: '跟踪分析',
       type: 'select',
-      proxies: ['REJECT', '直连', '节点选择'],
+      proxies: ['REJECT', '直连', '🚀 节点选择'],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Reject.png',
       hidden: true,
     })
@@ -664,7 +664,7 @@ function main(config) {
       ...groupBaseOption,
       name: '广告过滤',
       type: 'select',
-      proxies: ['REJECT', '直连', '节点选择'],
+      proxies: ['REJECT', '直连', '🚀 节点选择'],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Advertising.png',
       hidden: true,
     })
@@ -677,7 +677,7 @@ function main(config) {
       ...groupBaseOption,
       name: '苹果服务',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.apple.com/library/test/success.html',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple_2.png',
       hidden: true,
@@ -691,7 +691,7 @@ function main(config) {
       ...groupBaseOption,
       name: '谷歌服务',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.google.com/generate_204',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google_Search.png',
       hidden: true,
@@ -705,7 +705,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'Github',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://github.com/robots.txt',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png',
       hidden: true,
@@ -740,7 +740,7 @@ function main(config) {
       ...groupBaseOption,
       name: '日本网站',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['🚀 节点选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://r.r10s.jp/com/img/home/logo/touch.png',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/JP.png',
     })
@@ -762,7 +762,7 @@ function main(config) {
       proxies: [
         '直连',
         'REJECT',
-        '节点选择',
+        '🚀 节点选择',
         '国内网站',
         ...proxyGroupsRegionNames,
       ],
@@ -773,7 +773,7 @@ function main(config) {
       ...groupBaseOption,
       name: '其他外网',
       type: 'select',
-      proxies: ['节点选择', '国内网站', ...proxyGroupsRegionNames],
+      proxies: ['🚀 节点选择', '国内网站', ...proxyGroupsRegionNames],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Streaming!CN.png',
       hidden: true,
     },
@@ -781,7 +781,7 @@ function main(config) {
       ...groupBaseOption,
       name: '国内网站',
       type: 'select',
-      proxies: ['直连', '节点选择', ...proxyGroupsRegionNames],
+      proxies: ['直连', '🚀 节点选择', ...proxyGroupsRegionNames],
       url: 'http://wifi.vivo.com.cn/generate_204',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png',
       hidden: true,
