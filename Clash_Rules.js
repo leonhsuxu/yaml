@@ -108,19 +108,19 @@ const regionOptions = {
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Korea.png',
     },
     {
-      name: 'SG新加坡',
+      name: 'SG狮城',
       regex: /新加坡|🇸🇬|sg|singapore/i,
       ratioLimit: 2,
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png',
     },
     {
-      name: 'CN中国大陆',
+      name: 'CN中国',
       regex: /中国|🇨🇳|cn|china/i,
       ratioLimit: 2,
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png',
     },
     {
-      name: 'TW台湾省',
+      name: 'TW湾省',
       regex: /台湾|🇹🇼|tw|taiwan|tai wan/i,
       ratioLimit: 2,
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png',
