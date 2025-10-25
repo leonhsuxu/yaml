@@ -15,6 +15,8 @@ const enable = true
  * 设置的时候可遵循“最小，可用”原则，把自己不需要的规则全禁用掉，提高效率
  * true = 启用
  * false = 禁用
+ *
+ * 已按要求：禁用 youtube、netflix、tiktok、spotify、WhatsApp、line、games、日本网站 等标签
  */
 const ruleOptions = {
   apple: false, // 苹果服务
@@ -22,11 +24,11 @@ const ruleOptions = {
   github: false, // Github服务
   google: false, // Google服务
   openai: false, // 国外AI和GPT
-  spotify: false, // Spotify
-  youtube: false, // YouTube
+  spotify: false, // Spotify (已禁用)
+  youtube: false, // YouTube (已禁用)
   bahamut: false, // 巴哈姆特/动画疯 (禁用)
-  netflix: true, // Netflix网飞
-  tiktok: true, // 国际版抖音
+  netflix: false, // Netflix网飞 (已禁用)
+  tiktok: false, // 国际版抖音 (已禁用)
   disney: false, // 迪士尼 (禁用)
   pixiv: false, // Pixiv (禁用)
   hbo: false, // HBO (禁用)
@@ -35,10 +37,10 @@ const ruleOptions = {
   hulu: false, // Hulu (禁用)
   primevideo: false, // 亚马逊prime video (禁用)
   telegram: false, // Telegram通讯软件
-  line: false, // Line
-  whatsapp: false, // Whatsapp
-  games: false, // 游戏策略组
-  japan: false, // 日本网站策略组
+  line: false, // Line (已禁用)
+  whatsapp: false, // Whatsapp (已禁用)
+  games: false, // 游戏策略组 (已禁用)
+  japan: false, // 日本网站策略组 (已禁用)
   tracker: false, // 网络分析和跟踪服务
   ads: true, // 常见的广告
 }
@@ -361,14 +363,14 @@ function main(config) {
     proxyGroupsRegionNames.push('其他节点')
   }
 
-  // 更改：默认节点名称改为 "节点选择"，并在其中增加 "自动选择" 选项
+  // 更改：默认节点名称改为 "节点选择"，并在其中增加 "自动选择"、"故障转移"、"负载均衡" 选项
   config['proxy-groups'] = [
     {
       ...groupBaseOption,
       name: '节点选择',
       type: 'select',
-      // 在选项中增加 "自动选择"（需下面创建对应的策略组），并保留地区组与直连
-      proxies: ['自动选择', ...proxyGroupsRegionNames, '直连'],
+      // 在选项中增加 "自动选择"、"故障转移" 和 "负载均衡"（需下面创建对应的策略组），并保留地区组与直连
+      proxies: ['自动选择', '故障转移', '负载均衡', ...proxyGroupsRegionNames, '直连'],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
     },
   ]
@@ -382,6 +384,29 @@ function main(config) {
     // 自动选择会测试所有地区组与直连
     proxies: [...proxyGroupsRegionNames, '直连'],
     icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
+  })
+
+  // 新增：故障转移（fallback）策略组，用于主节点异常时自动切换到后备节点
+  config['proxy-groups'].push({
+    ...groupBaseOption,
+    name: '故障转移',
+    type: 'fallback',
+    // fallback通常按顺序尝试，这里将地区组与直连放在列表中，优先顺序可按需要调整
+    proxies: [...proxyGroupsRegionNames, '直连'],
+    url: 'http://cp.cloudflare.com/generate_204',
+    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Fallback.png',
+  })
+
+  // 新增：负载均衡（load-balance）策略组，用于轮询/加权分配流量
+  config['proxy-groups'].push({
+    ...groupBaseOption,
+    name: '负载均衡',
+    type: 'load-balance',
+    // strategy/策略字段有不同实现，这里使用常见的 round-robin 值作为示例
+    strategy: 'round-robin',
+    tolerance: 200,
+    proxies: [...proxyGroupsRegionNames, '直连'],
+    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Load_Balance.png',
   })
 
   config.proxies = config?.proxies || []
@@ -409,7 +434,7 @@ function main(config) {
       ...groupBaseOption,
       name: '国外AI',
       type: 'select',
-      proxies: ['节点选择', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['自动选择', ...proxyGroupsRegionNames, '直连'],
       url: 'https://chat.openai.com/cdn-cgi/trace',
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png',
       hidden: true,
