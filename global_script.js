@@ -22,11 +22,11 @@ const ruleOptions = {
   github: true, // Github服务
   google: true, // Google服务
   openai: true, // 国外AI和GPT
-  spotify: true, // Spotify
-  youtube: true, // YouTube
+  spotify: false, // Spotify (禁用)
+  youtube: false, // YouTube (禁用)
   bahamut: false, // 巴哈姆特/动画疯 (禁用)
-  netflix: true, // Netflix网飞
-  tiktok: true, // 国际版抖音
+  netflix: false, // Netflix网飞 (禁用)
+  tiktok: false, // 国际版抖音 (禁用)
   disney: false, // 迪士尼 (禁用)
   pixiv: false, // Pixiv (禁用)
   hbo: false, // HBO (禁用)
@@ -35,10 +35,10 @@ const ruleOptions = {
   hulu: false, // Hulu (禁用)
   primevideo: false, // 亚马逊prime video (禁用)
   telegram: true, // Telegram通讯软件
-  line: true, // Line
-  whatsapp: true, // Whatsapp
-  games: true, // 游戏策略组
-  japan: true, // 日本网站策略组
+  line: false, // Line (禁用)
+  whatsapp: false, // Whatsapp (禁用)
+  games: false, // 游戏策略组 (禁用)
+  japan: false, // 日本网站策略组 (禁用)
   tracker: true, // 网络分析和跟踪服务
   ads: true, // 常见的广告
 }
@@ -118,40 +118,17 @@ const regionOptions = {
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png',
     },
     {
-      name: 'GB英国',
-      regex: /英|🇬🇧|uk|united kingdom|great britain/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png',
-    },
-    {
       name: 'DE德国',
       regex: /德国|🇩🇪|de|germany/i,
       ratioLimit: 2,
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png',
     },
+    // 将 原先的 英国/马来西亚/土耳其/加拿大/澳大利亚 合并到一个“其他地区”组
     {
-      name: 'MY马来西亚',
-      regex: /马来|🇲🇾|my|malaysia/i,
+      name: '其他地区',
+      regex: /(英|🇬🇧|uk|united kingdom|great britain|马来|🇲🇾|my|malaysia|土耳其|🇹🇷|tk|turkey|加拿大|🇨🇦|ca|canada|澳大利亚|🇦🇺|au|australia|sydney)/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png',
-    },
-    {
-      name: 'TK土耳其',
-      regex: /土耳其|🇹🇷|tk|turkey/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png',
-    },
-    {
-      name: 'CA加拿大',
-      regex: /加拿大|🇨🇦|ca|canada/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png',
-    },
-    {
-      name: 'AU澳大利亚',
-      regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png',
+      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png',
     },
   ],
 }
@@ -394,6 +371,36 @@ function main(config) {
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
     },
   ]
+
+  // 新增三个全局可调用策略组：自动选择（url-test）、负载均衡（load-balance）、故障转移（fallback）
+  config['proxy-groups'].push(
+    {
+      ...groupBaseOption,
+      name: '♻️ 自动选择',
+      type: 'url-test',
+      tolerance: 50,
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://cp.cloudflare.com/generate_204',
+      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto_Select.png',
+    },
+    {
+      ...groupBaseOption,
+      name: '⚖️ 负载均衡',
+      // Clash 支持 load-balance 类型，默认会在多个节点间分流
+      type: 'load-balance',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Balance.png',
+    },
+    {
+      ...groupBaseOption,
+      name: '🔄 故障转移',
+      // fallback 类型在主节点失败时回退到候选节点
+      type: 'fallback',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://cp.cloudflare.com/generate_204',
+      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Failover.png',
+    }
+  )
 
   config.proxies = config?.proxies || []
   config.proxies.push({
