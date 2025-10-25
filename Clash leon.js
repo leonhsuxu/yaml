@@ -17,13 +17,13 @@ const enable = true
  * false = 禁用
  */
 const ruleOptions = {
-  apple: true, // 苹果服务
+  apple: false, // 苹果服务
   microsoft: false, // 微软服务 (禁用)
-  github: true, // Github服务
-  google: true, // Google服务
-  openai: true, // 国外AI和GPT
-  spotify: true, // Spotify
-  youtube: true, // YouTube
+  github: false, // Github服务
+  google: false, // Google服务
+  openai: false, // 国外AI和GPT
+  spotify: false, // Spotify
+  youtube: false, // YouTube
   bahamut: false, // 巴哈姆特/动画疯 (禁用)
   netflix: true, // Netflix网飞
   tiktok: true, // 国际版抖音
@@ -34,12 +34,12 @@ const ruleOptions = {
   tvb: false, // TVB (禁用)
   hulu: false, // Hulu (禁用)
   primevideo: false, // 亚马逊prime video (禁用)
-  telegram: true, // Telegram通讯软件
-  line: true, // Line
-  whatsapp: true, // Whatsapp
-  games: true, // 游戏策略组
-  japan: true, // 日本网站策略组
-  tracker: true, // 网络分析和跟踪服务
+  telegram: false, // Telegram通讯软件
+  line: false, // Line
+  whatsapp: false, // Whatsapp
+  games: false, // 游戏策略组
+  japan: false, // 日本网站策略组
+  tracker: false, // 网络分析和跟踪服务
   ads: true, // 常见的广告
 }
 
