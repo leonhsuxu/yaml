@@ -1,0 +1,203 @@
+rule-providers:
+  # 全球直连相关规则
+  LocalAreaNetwork:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/LocalAreaNetwork.list
+    path: ./ruleset/LocalAreaNetwork.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+  UnBan:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/UnBan.list
+    path: ./ruleset/UnBan.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+  GoogleCN:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/GoogleCN.list
+    path: ./ruleset/GoogleCN.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+  SteamCN:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/SteamCN.list
+    path: ./ruleset/SteamCN.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+  ChinaDomain:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaDomain.list
+    path: ./ruleset/ChinaDomain.list
+    behavior: domain
+    interval: 86400
+    format: text
+    type: http
+  ChinaCompanyIp:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaCompanyIp.list
+    path: ./ruleset/ChinaCompanyIp.list
+    behavior: ipcidr
+    interval: 86400
+    format: text
+    type: http
+  Download:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Download.list
+    path: ./ruleset/Download.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+
+  # 广告拦截相关规则
+  BanAD:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list
+    path: ./ruleset/BanAD.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+  BanProgramAD:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list
+    path: ./ruleset/BanProgramAD.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+
+  # 节点选择相关规则
+  ProxyGFWlist:
+    url: https://testingcf.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ProxyGFWlist.list
+    path: ./ruleset/ProxyGFWlist.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+
+rules:
+  # 全球直连
+  - "RULE-SET,LocalAreaNetwork,全球直连"
+  - "RULE-SET,UnBan,全球直连"
+  - "RULE-SET,GoogleCN,全球直连"
+  - "RULE-SET,SteamCN,全球直连"
+  - "RULE-SET,ChinaDomain,全球直连"
+  - "RULE-SET,ChinaCompanyIp,全球直连"
+  - "RULE-SET,Download,全球直连"
+  - "GEOIP,CN,全球直连"
+
+  # 广告拦截
+  - "RULE-SET,BanAD,广告拦截"
+  - "RULE-SET,BanProgramAD,广告拦截"
+
+  # 节点选择
+  - "RULE-SET,ProxyGFWlist,节点选择"
+
+  # 默认匹配
+  - "MATCH,漏网之鱼"
+
+
+proxy-groups:
+  - name: 节点选择
+    type: select
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
+    proxies:
+      - 自动选择
+      - 香港节点
+      - 日本节点
+      - 美国节点
+      - 韩国节点
+      - 台湾节点
+      - 新加坡节点
+      - 其他节点
+      - DIRECT
+
+  - name: 自动选择
+    type: url-test
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png
+    include-all: true
+    interval: 300
+    tolerance: 50
+
+  - name: 故障转移
+    type: fallback
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Fallback.png
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 美国节点
+      - 韩国节点
+      - 台湾节点
+      - 新加坡节点
+      - 其他节点
+    fallback-filter:
+      retry: 3
+      interval: 300
+
+  - name: 负载均衡
+    type: load-balance
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/LoadBalance.png
+    strategy: round-robin
+    interval: 300
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 美国节点
+      - 韩国节点
+      - 台湾节点
+      - 新加坡节点
+      - 其他节点
+
+  - name: 香港节点
+    type: url-test
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
+    include-all: true
+    filter: (?i)港|HK|hk|Hong Kong|HongKong|hongkong
+    interval: 300
+    tolerance: 50
+
+  - name: 日本节点
+    type: url-test
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
+    include-all: true
+    filter: (?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan
+    interval: 300
+    tolerance: 50
+
+  - name: 美国节点
+    type: url-test
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
+    include-all: true
+    filter: (?i)美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States
+    interval: 300
+    tolerance: 50
+
+  - name: 韩国节点
+    type: url-test
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png
+    include-all: true
+    filter: (?i)KR|Korea|KOR|首尔|韩|韓
+    interval: 300
+    tolerance: 50
+
+  - name: 台湾节点
+    type: url-test
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
+    include-all: true
+    filter: (?i)台|新北|彰化|TW|Taiwan
+    interval: 300
+    tolerance: 50
+
+  - name: 新加坡节点
+    type: url-test
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
+    include-all: true
+    filter: (?i)新加坡|坡|狮城|SG|Singapore
+    interval: 300
+    tolerance: 50
+
+  - name: 其他节点
+    type: select
+    include-all: true
+    proxies:
+      - DIRECT
