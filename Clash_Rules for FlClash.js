@@ -65,7 +65,7 @@ const rules = [
   'DOMAIN-SUFFIX,6666456.xyz,DIRECT',
   'DOMAIN-SUFFIX,191920.xyz,DIRECT',
   'DOMAIN-SUFFIX,nijigem.by,DIRECT',
-  'DOMAIN-SUFFIX,ciallo.party,DIRECT',
+  
   
 // 其他规则，可按规则补充
 
