@@ -52,20 +52,20 @@ const ruleOptions = {
  */
 const rules = [
 // Emby源地址，直连DIRECT
-  'DOMAIN-SUFFIX,hohai.eu.org,DIRECT',
-  'DOMAIN-SUFFIX,cerda.eu.org,DIRECT',
-  'DOMAIN-SUFFIX,seraphine.eu.org,DIRECT',
-  'DOMAIN-SUFFIX,kowo.eu.org,DIRECT',
-  'DOMAIN-SUFFIX,libilibi.eu.org,DIRECT',
+  'DOMAIN-SUFFIX,hohai.eu.org,DIRECT',//hohai emby
+  'DOMAIN-SUFFIX,cerda.eu.org,DIRECT',//微信董
+  'DOMAIN-SUFFIX,seraphine.eu.org,DIRECT',//微信董
+  'DOMAIN-SUFFIX,kowo.eu.org,DIRECT',//微信董
+  'DOMAIN-SUFFIX,libilibi.eu.org,DIRECT',//微信董
   'DOMAIN-SUFFIX,nouon.eu.org,DIRECT',
-  'DOMAIN-SUFFIX,feiyue.lol,DIRECT',
+  'DOMAIN-SUFFIX,feiyue.lol,DIRECT',//飞跃彩虹
   'DOMAIN-SUFFIX,aliz.work,DIRECT',
-  'DOMAIN-SUFFIX,emos.lol,DIRECT',
+  'DOMAIN-SUFFIX,emos.lol,DIRECT',//emos
   'DOMAIN-SUFFIX,bangumi.ca,DIRECT',
   'DOMAIN-SUFFIX,6666456.xyz,DIRECT',
-  'DOMAIN-SUFFIX,191920.xyz,DIRECT',
-  'DOMAIN-SUFFIX,nijigem.by,DIRECT',
-  'DOMAIN-SUFFIX,ciallo.party,DIRECT',
+  'DOMAIN-SUFFIX,191920.xyz,DIRECT',//电视台
+  'DOMAIN-SUFFIX,nijigem.by,DIRECT',//二次元Emby
+  
   
 // 其他规则，可按规则补充
 
