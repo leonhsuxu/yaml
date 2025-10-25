@@ -48,22 +48,24 @@ const ruleOptions = {
  * 如果有需要前置的自定义规则，可以自行修改
  */
 const rules = [
-  'RULE-SET,applications,下载软件',
-  'PROCESS-NAME,SunloginClient,DIRECT',
-  'PROCESS-NAME,SunloginClient.exe,DIRECT',
-  'PROCESS-NAME,AnyDesk,DIRECT',
-  'PROCESS-NAME,AnyDesk.exe,DIRECT',
-  'PROCESS-NAME,节点小宝,DIRECT',
-  'PROCESS-NAME,nblink.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkBackup,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkClient,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkRfile,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkBackup.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkClient.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkDevice.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkOwjdxb.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkRfile.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkService.exe,DIRECT',
+// Emby源地址，直连DIRECT
+  'DOMAIN-SUFFIX,hohai.eu.org,DIRECT',
+  'DOMAIN-SUFFIX,cerda.eu.org,DIRECT',
+  'DOMAIN-SUFFIX,seraphine.eu.org,DIRECT',
+  'DOMAIN-SUFFIX,kowo.eu.org,DIRECT',
+  'DOMAIN-SUFFIX,libilibi.eu.org,DIRECT',
+  'DOMAIN-SUFFIX,nouon.eu.org,DIRECT',
+  'DOMAIN-SUFFIX,feiyue.lol,DIRECT',
+  'DOMAIN-SUFFIX,aliz.work,DIRECT',
+  'DOMAIN-SUFFIX,emos.lol,DIRECT',
+  'DOMAIN-SUFFIX,bangumi.ca,DIRECT',
+  'DOMAIN-SUFFIX,6666456.xyz,DIRECT',
+  'DOMAIN-SUFFIX,191920.xyz,DIRECT',
+  'DOMAIN-SUFFIX,nijigem.by,DIRECT',
+  'DOMAIN-SUFFIX,ciallo.party,DIRECT',
+  
+// 其他规则，可按规则补充
+
 ]
 
 /**
@@ -363,7 +365,8 @@ function main(config) {
       ...groupBaseOption,
       name: '节点选择',
       type: 'select',
-      proxies: [...proxyGroupsRegionNames, '直连'],
+      // 修改：在“节点选择”中加入“♻️ 自动选择”选项，方便直接从节点选择中切换到自动选择
+      proxies: ['♻️ 自动选择', ...proxyGroupsRegionNames, '直连'],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
     },
   ]
