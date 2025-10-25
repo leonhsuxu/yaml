@@ -1,5 +1,6 @@
 /***
- * Clash Verge Rev 全局扩展脚本（懒人配置）/ Mihomo Party 覆写脚本
+ *Clash Rules & ProxyGroup
+ * 基于Clash Verge Rev 全局扩展脚本（懒人配置）/ Mihomo Party 覆写脚本进行的修改
  * URL: https://github.com/dahaha-365/YaNet/
  */
 
