@@ -371,7 +371,7 @@ function main(config) {
       name: '节点选择',
       type: 'select',
       // 在选项中增加 "自动选择"、"故障转移" 和 "负载均衡"（需下面创建对应的策略组），并保留地区组与直连
-      proxies: ['自动选择', '故障转移', '负载均衡', ...proxyGroupsRegionNames, '直连'],
+      proxies: ['♻️ 自动选择', ...proxyGroupsRegionNames, '直连'], //⚖️ 负载均衡、🔄 故障转移也可以增加到自动选择后面
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
     },
   ]
