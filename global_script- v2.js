@@ -118,41 +118,41 @@ const regionOptions = {
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png',
     },
     //{
-      name: 'GB英国',
-      regex: /英|🇬🇧|uk|united kingdom|great britain/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png',
-    },
+    //  name: 'GB英国',
+    //  regex: /英|🇬🇧|uk|united kingdom|great britain/i,
+    //  ratioLimit: 2,
+    //  icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png',
+   // },
     //{
-      name: 'DE德国',
-      regex: /德国|🇩🇪|de|germany/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png',
-    },
+    //  name: 'DE德国',
+    //  regex: /德国|🇩🇪|de|germany/i,
+    //  ratioLimit: 2,
+    //  icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png',
+   // },
    // {
-      name: 'MY马来西亚',
-      regex: /马来|🇲🇾|my|malaysia/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png',
-    },
+   //   name: 'MY马来西亚',
+    //  regex: /马来|🇲🇾|my|malaysia/i,
+   //   ratioLimit: 2,
+   //   icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png',
+   // },
     //{
-      name: 'TK土耳其',
-      regex: /土耳其|🇹🇷|tk|turkey/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png',
-    },
+    //  name: 'TK土耳其',
+    //  regex: /土耳其|🇹🇷|tk|turkey/i,
+    //  ratioLimit: 2,
+    //  icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png',
+   // },
    // {
-      name: 'CA加拿大',
-      regex: /加拿大|🇨🇦|ca|canada/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png',
-    },
+   //   name: 'CA加拿大',
+   //   regex: /加拿大|🇨🇦|ca|canada/i,
+   //   ratioLimit: 2,
+   //  icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png',
+   // },
    // {
-      name: 'AU澳大利亚',
-      regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
-      ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png',
-    },
+   //   name: 'AU澳大利亚',
+   //   regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
+   //   ratioLimit: 2,
+   //   icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png',
+   // },
   ],
 }
 
@@ -385,17 +385,18 @@ function main(config) {
     proxyGroupsRegionNames.push('其他节点')
   }
 
-  config['proxy-groups'] = [
-    {
-      ...groupBaseOption,
-      name: '默认节点',
-      type: 'select',
-      proxies: [...proxyGroupsRegionNames, '直连'],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
-    },
-  ]
-  
-  config['proxy-groups'].push(
+config['proxy-groups'] = [
+  {
+    ...groupBaseOption,
+    name: '默认节点',
+    type: 'select',
+    proxies: [...proxyGroupsRegionNames, '直连'],
+    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
+  },
+]
+
+// 新增三个全局通用策略组
+config['proxy-groups'].push(
   {
     ...groupBaseOption,
     name: '♻️ 自动选择',
@@ -416,8 +417,11 @@ function main(config) {
     type: 'fallback',
     proxies: [...proxyGroupsRegionNames, '直连'],
     icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Fallback.png',
-  }
+  },
 )
+
+// 再合并已有的地区分组
+config['proxy-groups'] = config['proxy-groups'].concat(regionProxyGroups)
   
 
   config.proxies = config?.proxies || []
