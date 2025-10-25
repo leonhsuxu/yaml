@@ -723,6 +723,67 @@ function main(config) {
   //}
   )
 
+    /* ========= 补丁：把 5 个地区节点全部移到「其他地区」 ========= */
+  const fiveRegions = /(英国|🇬🇧|UK|马来西亚|🇲🇾|MY|土耳其|🇹🇷|TR|加拿大|🇨🇦|CA|澳大利亚|🇦🇺|AU)/i;
+  const fiveNodes = [];                       // 收集 5 区节点
+  regionProxyGroups = regionProxyGroups.filter(g => {
+    if (fiveRegions.test(g.name)) {
+      fiveNodes.push(...g.proxies);          // 抽出节点
+      return false;                          // 删除该策略组
+    }
+    return true;                             // 保留剩余地区组
+  });
+
+  // 把 5 区节点与原来「其他节点」合并
+  otherProxyGroups.push(...fiveNodes);
+  otherProxyGroups = [...new Set(otherProxyGroups)]; // 去重
+
+  /* ========= 补丁：新增 3 个全局策略组 ========= */
+  const allNodeNames = [
+    ...regionProxyGroups.flatMap(g => g.proxies), // 剩余地区节点
+    ...otherProxyGroups,                          // 含 5 区节点
+  ];
+
+  const newGlobalGroups = [
+    {
+      ...groupBaseOption,
+      name: '♻️ 自动选择',
+      type: 'url-test',
+      tolerance: 50,
+      proxies: allNodeNames,
+    },
+    {
+      ...groupBaseOption,
+      name: '⚖️ 负载均衡',
+      type: 'load-balance',
+      strategy: 'consistent-hashing',
+      proxies: allNodeNames,
+    },
+    {
+      ...groupBaseOption,
+      name: '🔄 故障转移',
+      type: 'fallback',
+      proxies: allNodeNames,
+    },
+  ];
+
+  /* ========= 写回最终 proxy-groups ========= */
+  const regionNames = [
+    ...regionProxyGroups.map(g => g.name),
+    ...newGlobalGroups.map(g => g.name),
+  ];
+
+  config['proxy-groups'] = [
+    {
+      ...groupBaseOption,
+      name: '默认节点',
+      type: 'select',
+      proxies: [...regionNames, '其他节点', '直连'],
+    },
+    ...newGlobalGroups,
+    ...regionProxyGroups,
+  ];
+
   config['proxy-groups'] = config['proxy-groups'].concat(regionProxyGroups)
 
   // 覆盖原配置中的规则
@@ -743,3 +804,4 @@ function main(config) {
   return config
 
 }
+
