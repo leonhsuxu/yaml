@@ -378,29 +378,27 @@ function main(config) {
   // 新增：自动选择 策略组（用于“节点选择”中的自动选择项）
   config['proxy-groups'].push({
     ...groupBaseOption,
-    name: '自动选择',
+    name: '♻️ 自动选择',
     type: 'url-test',
     tolerance: 50,
     // 自动选择会测试所有地区组与直连
     proxies: [...proxyGroupsRegionNames, '直连'],
-    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
-  })
+    })
 
   // 新增：故障转移（fallback）策略组，用于主节点异常时自动切换到后备节点
   config['proxy-groups'].push({
     ...groupBaseOption,
-    name: '故障转移',
+    name: '🔄 故障转移',
     type: 'fallback',
     // fallback通常按顺序尝试，这里将地区组与直连放在列表中，优先顺序可按需要调整
     proxies: [...proxyGroupsRegionNames, '直连'],
     url: 'http://cp.cloudflare.com/generate_204',
-    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Fallback.png',
   })
 
   // 新增：负载均衡（load-balance）策略组，用于轮询/加权分配流量
   config['proxy-groups'].push({
     ...groupBaseOption,
-    name: '负载均衡',
+    name: '⚖️ 负载均衡',
     type: 'load-balance',
     // strategy/策略字段有不同实现，这里使用常见的 round-robin 值作为示例
     strategy: 'round-robin',
